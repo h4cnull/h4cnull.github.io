@@ -1,1 +1,279 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel="shortcut icon" href=/static/favicon.ico><title>h4cnull&#39;s blog</title><link href=/static/css/app.c64eadfc8d3abfc9d85514dba4054813.css rel=stylesheet><meta name="generator" content="Hexo 4.2.0"></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.992b63bf2abbf3194771.js></script><script type=text/javascript src=/static/js/vendor.e12dc8c9af1f7aa12436.js></script><script type=text/javascript src=/static/js/app.bc036f9167871d39aecf.js></script></body></html>
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1.禁用js2.修改Content-Type3.黑名单绕过-上传特殊文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件上传CheatSheet">
+<meta property="og:url" content="http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/index.html">
+<meta property="og:site_name" content="h4cnull&#39;s blog">
+<meta property="og:description" content="1.禁用js2.修改Content-Type3.黑名单绕过-上传特殊文件">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-22T12:38:45.334Z">
+<meta property="article:modified_time" content="2020-02-22T12:38:27.122Z">
+<meta property="article:author" content="h4cnull">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>文件上传CheatSheet</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/02/22/XSSCheatSheet/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/02/22/%E5%86%85%E7%BD%91-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&text=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&title=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&is_video=false&description=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=文件上传CheatSheet&body=Check out this article: http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&title=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&title=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&title=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&title=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&name=文件上传CheatSheet&description=&lt;h5 id=&#34;1-禁用js&#34;&gt;&lt;a href=&#34;#1-禁用js&#34; class=&#34;headerlink&#34; title=&#34;1.禁用js&#34;&gt;&lt;/a&gt;1.禁用js&lt;/h5&gt;&lt;h5 id=&#34;2-修改Content-Type&#34;&gt;&lt;a href=&#34;#2-修改Content-Type&#34; class=&#34;headerlink&#34; title=&#34;2.修改Content-Type&#34;&gt;&lt;/a&gt;2.修改Content-Type&lt;/h5&gt;&lt;h5 id=&#34;3-黑名单绕过-上传特殊文件&#34;&gt;&lt;a href=&#34;#3-黑名单绕过-上传特殊文件&#34; class=&#34;headerlink&#34; title=&#34;3.黑名单绕过-上传特殊文件&#34;&gt;&lt;/a&gt;3.黑名单绕过-上传特殊文件" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&t=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-禁用js"><span class="toc-number">1.</span> <span class="toc-text">1.禁用js</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-修改Content-Type"><span class="toc-number">2.</span> <span class="toc-text">2.修改Content-Type</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-黑名单绕过-上传特殊文件"><span class="toc-number">3.</span> <span class="toc-text">3.黑名单绕过-上传特殊文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-上传-htaccess"><span class="toc-number">4.</span> <span class="toc-text">4.上传.htaccess</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-更改后缀大小写"><span class="toc-number">5.</span> <span class="toc-text">5.更改后缀大小写</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-后缀加-空格-DATA-等"><span class="toc-number">6.</span> <span class="toc-text">6.后缀加    空格    .    ::$DATA     等</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-利用解析漏洞"><span class="toc-number">7.</span> <span class="toc-text">7.利用解析漏洞</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8-后缀去除缺陷"><span class="toc-number">8.</span> <span class="toc-text">8.后缀去除缺陷</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#9-00截断"><span class="toc-number">9.</span> <span class="toc-text">9.%00截断</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#10-上传一般图片马"><span class="toc-number">10.</span> <span class="toc-text">10.上传一般图片马</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#11-条件竞争"><span class="toc-number">11.</span> <span class="toc-text">11.条件竞争</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#12-绕过二次渲染"><span class="toc-number">12.</span> <span class="toc-text">12.绕过二次渲染</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#13-日志包含"><span class="toc-number">13.</span> <span class="toc-text">13.日志包含</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        文件上传CheatSheet
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">h4cnull's blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-22T12:38:45.334Z" itemprop="datePublished">2020-02-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h5 id="1-禁用js"><a href="#1-禁用js" class="headerlink" title="1.禁用js"></a>1.禁用js</h5><h5 id="2-修改Content-Type"><a href="#2-修改Content-Type" class="headerlink" title="2.修改Content-Type"></a>2.修改Content-Type</h5><h5 id="3-黑名单绕过-上传特殊文件"><a href="#3-黑名单绕过-上传特殊文件" class="headerlink" title="3.黑名单绕过-上传特殊文件"></a>3.黑名单绕过-上传特殊文件<a id="more"></a></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">html、htm、swf、php5、.htaccess、web.config、web.xml</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-上传-htaccess"><a href="#4-上传-htaccess" class="headerlink" title="4.上传.htaccess"></a>4.上传.htaccess</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;a.匹配文件名解析</span><br><span class="line">&lt;FilesMatch &quot;123456.jpg&quot;&gt;</span><br><span class="line">  SetHandler application&#x2F;x-httpd-php</span><br><span class="line">&lt;&#x2F;FilesMatch&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;b.匹配文件类型</span><br><span class="line">AddType application&#x2F;x-httpd-php .jpg</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-更改后缀大小写"><a href="#5-更改后缀大小写" class="headerlink" title="5.更改后缀大小写"></a>5.更改后缀大小写</h5><h5 id="6-后缀加-空格-DATA-等"><a href="#6-后缀加-空格-DATA-等" class="headerlink" title="6.后缀加    空格    .    ::$DATA     等"></a>6.后缀加    空格    .    ::$DATA     等</h5><h5 id="7-利用解析漏洞"><a href="#7-利用解析漏洞" class="headerlink" title="7.利用解析漏洞"></a>7.利用解析漏洞</h5><h5 id="8-后缀去除缺陷"><a href="#8-后缀去除缺陷" class="headerlink" title="8.后缀去除缺陷"></a>8.后缀去除缺陷</h5><p>​    只去除一次黑名单字符：组合 点空格点 、双写绕过xxx.pphphp等</p>
+<h5 id="9-00截断"><a href="#9-00截断" class="headerlink" title="9.%00截断"></a>9.%00截断</h5><p>​    修改上传目录参数为upload/test.php%00 文件名为合法文件后缀 保存时产生截断</p>
+<h5 id="10-上传一般图片马"><a href="#10-上传一般图片马" class="headerlink" title="10.上传一般图片马"></a>10.上传一般图片马</h5><p>​    copy /b a.jpg + /b phpinfo.php phpinfo.jpg  或者利用十六进制编辑器wxMEdit编辑添加</p>
+<h5 id="11-条件竞争"><a href="#11-条件竞争" class="headerlink" title="11.条件竞争"></a>11.条件竞争</h5><p>​    若服务器会先保存文件再判断文件合法性，可一直上传文件并不断访问，达到程序执行判断逻辑前就访问到图片的目的。</p>
+<h5 id="12-绕过二次渲染"><a href="#12-绕过二次渲染" class="headerlink" title="12.绕过二次渲染"></a>12.绕过二次渲染</h5><p>​    gif WinMerge对比上传前后文件的差别  编辑渲染后没有变化的片段</p>
+<p>​    jpg 利用jpg_payload.php转换</p>
+<h5 id="13-日志包含"><a href="#13-日志包含" class="headerlink" title="13.日志包含"></a>13.日志包含</h5><p>​    如：某个PHP文件存在本地包含漏洞，但是无法上传文件时，可通过包含apache日志文件获取shell。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-禁用js"><span class="toc-number">1.</span> <span class="toc-text">1.禁用js</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-修改Content-Type"><span class="toc-number">2.</span> <span class="toc-text">2.修改Content-Type</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-黑名单绕过-上传特殊文件"><span class="toc-number">3.</span> <span class="toc-text">3.黑名单绕过-上传特殊文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-上传-htaccess"><span class="toc-number">4.</span> <span class="toc-text">4.上传.htaccess</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-更改后缀大小写"><span class="toc-number">5.</span> <span class="toc-text">5.更改后缀大小写</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-后缀加-空格-DATA-等"><span class="toc-number">6.</span> <span class="toc-text">6.后缀加    空格    .    ::$DATA     等</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-利用解析漏洞"><span class="toc-number">7.</span> <span class="toc-text">7.利用解析漏洞</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8-后缀去除缺陷"><span class="toc-number">8.</span> <span class="toc-text">8.后缀去除缺陷</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#9-00截断"><span class="toc-number">9.</span> <span class="toc-text">9.%00截断</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#10-上传一般图片马"><span class="toc-number">10.</span> <span class="toc-text">10.上传一般图片马</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#11-条件竞争"><span class="toc-number">11.</span> <span class="toc-text">11.条件竞争</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#12-绕过二次渲染"><span class="toc-number">12.</span> <span class="toc-text">12.绕过二次渲染</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#13-日志包含"><span class="toc-number">13.</span> <span class="toc-text">13.日志包含</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&text=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&title=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&is_video=false&description=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=文件上传CheatSheet&body=Check out this article: http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&title=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&title=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&title=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&title=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&name=文件上传CheatSheet&description=&lt;h5 id=&#34;1-禁用js&#34;&gt;&lt;a href=&#34;#1-禁用js&#34; class=&#34;headerlink&#34; title=&#34;1.禁用js&#34;&gt;&lt;/a&gt;1.禁用js&lt;/h5&gt;&lt;h5 id=&#34;2-修改Content-Type&#34;&gt;&lt;a href=&#34;#2-修改Content-Type&#34; class=&#34;headerlink&#34; title=&#34;2.修改Content-Type&#34;&gt;&lt;/a&gt;2.修改Content-Type&lt;/h5&gt;&lt;h5 id=&#34;3-黑名单绕过-上传特殊文件&#34;&gt;&lt;a href=&#34;#3-黑名单绕过-上传特殊文件&#34; class=&#34;headerlink&#34; title=&#34;3.黑名单绕过-上传特殊文件&#34;&gt;&lt;/a&gt;3.黑名单绕过-上传特殊文件" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/02/22/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0CheatSheet/&t=文件上传CheatSheet" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 h4cnull
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
