@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="常见端口服务文件共享服务   端口号 服务 攻击类型    21&#x2F;69 FTP&#x2F;TFTP文件传输协议 爆破、匿名上传下载、嗅探   2049 NFS服务 配置不当   139 smb&#x2F;samba 爆破、未授权、远程代码执行   389 LDAP轻型目录访问协议 注入、匿名访问、弱口令   远程连接服务   端口号 服务 攻击类型    22 SSH 爆破、文件传输、SSH隧道和代理   23 Te">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网-扩展-常见服务以及网络协议解析">
+<meta property="og:url" content="http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="h4cnull&#39;s blog">
+<meta property="og:description" content="常见端口服务文件共享服务   端口号 服务 攻击类型    21&#x2F;69 FTP&#x2F;TFTP文件传输协议 爆破、匿名上传下载、嗅探   2049 NFS服务 配置不当   139 smb&#x2F;samba 爆破、未授权、远程代码执行   389 LDAP轻型目录访问协议 注入、匿名访问、弱口令   远程连接服务   端口号 服务 攻击类型    22 SSH 爆破、文件传输、SSH隧道和代理   23 Te">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/netbios_app.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/netbios_smb.jpg">
+<meta property="article:published_time" content="2020-02-24T11:25:45.266Z">
+<meta property="article:modified_time" content="2020-02-24T11:27:15.062Z">
+<meta property="article:author" content="h4cnull">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/netbios_app.PNG">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>内网-扩展-常见服务以及网络协议解析</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/02/22/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6%E6%BA%AF%E6%BA%90%E6%B5%8B%E8%AF%95/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&text=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&title=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&is_video=false&description=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=内网-扩展-常见服务以及网络协议解析&body=Check out this article: http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&title=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&title=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&title=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&title=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&name=内网-扩展-常见服务以及网络协议解析&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&t=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#常见端口服务"><span class="toc-number">1.</span> <span class="toc-text">常见端口服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件共享服务"><span class="toc-number">1.1.</span> <span class="toc-text">文件共享服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#远程连接服务"><span class="toc-number">1.2.</span> <span class="toc-text">远程连接服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WEB应用服务"><span class="toc-number">1.3.</span> <span class="toc-text">WEB应用服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据库服务端口"><span class="toc-number">1.4.</span> <span class="toc-text">数据库服务端口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#邮件服务端口"><span class="toc-number">1.5.</span> <span class="toc-text">邮件服务端口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网络协议常见端口"><span class="toc-number">1.6.</span> <span class="toc-text">网络协议常见端口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特殊服务端口"><span class="toc-number">1.7.</span> <span class="toc-text">特殊服务端口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见协议"><span class="toc-number">2.</span> <span class="toc-text">常见协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ARP协议"><span class="toc-number">2.1.</span> <span class="toc-text">ARP协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NETBIOS和SMB的关系"><span class="toc-number">2.2.</span> <span class="toc-text">NETBIOS和SMB的关系</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊扫描器"><span class="toc-number">3.</span> <span class="toc-text">特殊扫描器</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        内网-扩展-常见服务以及网络协议解析
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">h4cnull's blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-24T11:25:45.266Z" itemprop="datePublished">2020-02-24</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="常见端口服务"><a href="#常见端口服务" class="headerlink" title="常见端口服务"></a>常见端口服务</h3><h4 id="文件共享服务"><a href="#文件共享服务" class="headerlink" title="文件共享服务"></a>文件共享服务</h4><table>
+<thead>
+<tr>
+<th>端口号</th>
+<th>服务</th>
+<th>攻击类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>21/69</td>
+<td>FTP/TFTP文件传输协议</td>
+<td>爆破、匿名上传下载、嗅探</td>
+</tr>
+<tr>
+<td>2049</td>
+<td>NFS服务</td>
+<td>配置不当</td>
+</tr>
+<tr>
+<td>139</td>
+<td>smb/samba</td>
+<td>爆破、未授权、远程代码执行</td>
+</tr>
+<tr>
+<td>389</td>
+<td>LDAP轻型目录访问协议</td>
+<td>注入、匿名访问、弱口令</td>
+</tr>
+</tbody></table>
+<h4 id="远程连接服务"><a href="#远程连接服务" class="headerlink" title="远程连接服务"></a>远程连接服务</h4><table>
+<thead>
+<tr>
+<th>端口号</th>
+<th>服务</th>
+<th>攻击类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>22</td>
+<td>SSH</td>
+<td>爆破、文件传输、SSH隧道和代理</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Telnet</td>
+<td>嗅探、爆破</td>
+</tr>
+<tr>
+<td>3389</td>
+<td>RDP</td>
+<td>爆破、远程代码执行</td>
+</tr>
+<tr>
+<td>5900</td>
+<td>VNC</td>
+<td>弱口令爆破</td>
+</tr>
+<tr>
+<td>5632</td>
+<td>PcAnywhere</td>
+<td>密码抓取、代码执行</td>
+</tr>
+</tbody></table>
+<h4 id="WEB应用服务"><a href="#WEB应用服务" class="headerlink" title="WEB应用服务"></a>WEB应用服务</h4><table>
+<thead>
+<tr>
+<th>端口号</th>
+<th>服务</th>
+<th>攻击类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>80/443/8080</td>
+<td>web服务</td>
+<td>web攻击、爆破、漏洞</td>
+</tr>
+<tr>
+<td>7001/7002</td>
+<td>WebLogic控制台</td>
+<td>weblogic漏洞、java反序列化、弱口令</td>
+</tr>
+<tr>
+<td>8080/8089</td>
+<td>JBoss/Resin/Jetty/Jenkins</td>
+<td>反序列化、弱口令</td>
+</tr>
+<tr>
+<td>9090</td>
+<td>websphere控制台</td>
+<td>反序列化、弱口令</td>
+</tr>
+<tr>
+<td>4848</td>
+<td>GlassFish控制台</td>
+<td>弱口令</td>
+</tr>
+<tr>
+<td>1352</td>
+<td>lotus Domino邮件服务</td>
+<td>弱口令、信息泄露、爆破</td>
+</tr>
+<tr>
+<td>10000</td>
+<td>webmin控制面板</td>
+<td>弱口令</td>
+</tr>
+</tbody></table>
+<h4 id="数据库服务端口"><a href="#数据库服务端口" class="headerlink" title="数据库服务端口"></a>数据库服务端口</h4><table>
+<thead>
+<tr>
+<th>端口号</th>
+<th>服务</th>
+<th>攻击类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>3306</td>
+<td>mysql</td>
+<td>爆破、提权</td>
+</tr>
+<tr>
+<td>1433</td>
+<td>mssql</td>
+<td>爆破、提权</td>
+</tr>
+<tr>
+<td>1521</td>
+<td>oracle</td>
+<td>TNS爆破、注入、反弹shell</td>
+</tr>
+<tr>
+<td>5432</td>
+<td>postgresql</td>
+<td>爆破</td>
+</tr>
+<tr>
+<td>27017/27018</td>
+<td>mongodb</td>
+<td>爆破、未授权</td>
+</tr>
+<tr>
+<td>6379</td>
+<td>redis</td>
+<td>爆破、未授权</td>
+</tr>
+<tr>
+<td>5000</td>
+<td>sysbase/db2</td>
+<td>爆破</td>
+</tr>
+</tbody></table>
+<h4 id="邮件服务端口"><a href="#邮件服务端口" class="headerlink" title="邮件服务端口"></a>邮件服务端口</h4><table>
+<thead>
+<tr>
+<th>端口号</th>
+<th>服务</th>
+<th>攻击类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>25</td>
+<td>smtp</td>
+<td>邮件伪造</td>
+</tr>
+<tr>
+<td>110</td>
+<td>POP3</td>
+<td>嗅探</td>
+</tr>
+<tr>
+<td>143</td>
+<td>IMAP</td>
+<td>爆破</td>
+</tr>
+</tbody></table>
+<h4 id="网络协议常见端口"><a href="#网络协议常见端口" class="headerlink" title="网络协议常见端口"></a>网络协议常见端口</h4><table>
+<thead>
+<tr>
+<th>端口号</th>
+<th>服务</th>
+<th>攻击类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>53</td>
+<td>DNS</td>
+<td>区域传送漏洞、DNS劫持、缓存投毒、欺骗</td>
+</tr>
+<tr>
+<td>67/68</td>
+<td>DHCP服务</td>
+<td>劫持、欺骗</td>
+</tr>
+<tr>
+<td>161</td>
+<td>SNMP服务</td>
+<td>爆破、收集内网信息</td>
+</tr>
+</tbody></table>
+<h4 id="特殊服务端口"><a href="#特殊服务端口" class="headerlink" title="特殊服务端口"></a>特殊服务端口</h4><table>
+<thead>
+<tr>
+<th>端口号</th>
+<th>服务</th>
+<th>攻击类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2181</td>
+<td>zookeeper服务</td>
+<td>未授权</td>
+</tr>
+<tr>
+<td>8069</td>
+<td>zabbix</td>
+<td>远程执行、sql注入</td>
+</tr>
+<tr>
+<td>9200/9300</td>
+<td>elasticsearch</td>
+<td>远程执行</td>
+</tr>
+<tr>
+<td>11211</td>
+<td>memcached服务</td>
+<td>未授权访问</td>
+</tr>
+<tr>
+<td>512/513/514</td>
+<td>linux rexec服务</td>
+<td>爆破、远程登陆</td>
+</tr>
+<tr>
+<td>873</td>
+<td>rsync服务</td>
+<td>匿名访问、文件上传</td>
+</tr>
+<tr>
+<td>3690</td>
+<td>SVN服务</td>
+<td>SVN泄露、未授权访问</td>
+</tr>
+<tr>
+<td>50000</td>
+<td>SAP Management console</td>
+<td>远程执行</td>
+</tr>
+</tbody></table>
+<h3 id="常见协议"><a href="#常见协议" class="headerlink" title="常见协议"></a>常见协议</h3><h4 id="ARP协议"><a href="#ARP协议" class="headerlink" title="ARP协议"></a>ARP协议</h4><p>​    ARP即地址解析协议，根据IP地址获取物理地址的协议。ARP协议是介于网络层和数据链路层之间的协议，使得网络层的IP地址和数据链路层的MAC地址联系起来，从网络通信来看，是网络寻址到物理寻址的重要过程。由于ARP协议是建立在网络中主机间互相信任的基础上的，所以本身存在缺陷。在同一个网络中，通过伪造ARP数据包，可造成其它主机获取到错误的IP与MAC地址关系，达到欺骗主机通信的目的，截获流量，实现中间人攻击。</p>
+<h4 id="NETBIOS和SMB的关系"><a href="#NETBIOS和SMB的关系" class="headerlink" title="NETBIOS和SMB的关系"></a>NETBIOS和SMB的关系</h4><p>​    NetBIOS(Network Basic Input/Output System)即网络基本输入/输出系统。NetBIOS协议是一种在局域网上的程序可以使用的应用程序编程接口(API)，为程序提供了请求低级服务的统一的命令集，作用是为了给局域网提供网络以及其他特殊功能，几乎所有的局域网都是在NetBIOS协议的基础上工作的。</p>
+<p>​    NetBIOS名称用来在网络上鉴别资源。程序用这些名称开始和结束会话。</p>
+<p>​    在windows操作系统中，默认情况下在安装TCP/IP协议后会自动安装NetBIOS协议，NetBIOS的报文类型较多、结构复杂，在不同的网络环境和不同用途中会使用不同的报文，可用端口进行区分，WINS协议使用的NetBIOS名字报文UDP 137端口，NetBIOS数据报报文使用UDP 138端口，NetBIOS会话报文使用TCP 139端口。注意这些端口不是对应了NetBIOS服务，NetBIOS是API，基于NetBIOS的应用服务使用了这些端口，这也解释了NetBIOS和一些内网服务的关系，比如SMB。</p>
+<img src="/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/netbios_app.PNG" class="" title="[]">
+
+<p>​    SMB协议，SMB(Server Message block)协议是window下所使用的文件共享协议。（Samba服务是SMB的一个开源实现）</p>
+<p>​    SMB协议是运行在会话层之上的网络层协议，有两种运行方式，第一种通过NetBIOS API，使用的是UDP的137和138端口以及TCP的137和139的端口。</p>
+<img src="/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/netbios_smb.jpg" class="" title="[]">
+
+<p>​    第二种，直接运行在TCP和UDP协议之上，使用的是445端口，可以称为”Direct hosting of SMB over TCP/IP”。</p>
+<h3 id="特殊扫描器"><a href="#特殊扫描器" class="headerlink" title="特殊扫描器"></a>特殊扫描器</h3><p>​    探索利用某种协议来扫描探测内网？对比一般nmap等扫描器流量特征？</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#常见端口服务"><span class="toc-number">1.</span> <span class="toc-text">常见端口服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件共享服务"><span class="toc-number">1.1.</span> <span class="toc-text">文件共享服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#远程连接服务"><span class="toc-number">1.2.</span> <span class="toc-text">远程连接服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WEB应用服务"><span class="toc-number">1.3.</span> <span class="toc-text">WEB应用服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据库服务端口"><span class="toc-number">1.4.</span> <span class="toc-text">数据库服务端口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#邮件服务端口"><span class="toc-number">1.5.</span> <span class="toc-text">邮件服务端口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网络协议常见端口"><span class="toc-number">1.6.</span> <span class="toc-text">网络协议常见端口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特殊服务端口"><span class="toc-number">1.7.</span> <span class="toc-text">特殊服务端口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见协议"><span class="toc-number">2.</span> <span class="toc-text">常见协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ARP协议"><span class="toc-number">2.1.</span> <span class="toc-text">ARP协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NETBIOS和SMB的关系"><span class="toc-number">2.2.</span> <span class="toc-text">NETBIOS和SMB的关系</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊扫描器"><span class="toc-number">3.</span> <span class="toc-text">特殊扫描器</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&text=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&title=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&is_video=false&description=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=内网-扩展-常见服务以及网络协议解析&body=Check out this article: http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&title=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&title=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&title=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&title=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&name=内网-扩展-常见服务以及网络协议解析&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/&t=内网-扩展-常见服务以及网络协议解析" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 h4cnull
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
