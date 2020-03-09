@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="有时候web应用的漏洞会出现在需登陆认证后的页面中，通常情况下，我们会尝试多种方式通过认证，口令爆破、xss等，从而进一步对web应用进行测试。一次看到国外一大佬对vulnhub虚拟机hell的walkthrough，其思路独特，故作复现。当无法通过认证时，仍值得尝试按照其类似的思路对web应用进行分析。 ​    访问hell虚拟机的web，看起来是个个人应用，通过robots.txt，发现两个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分析需认证的web页面">
+<meta property="og:url" content="http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/index.html">
+<meta property="og:site_name" content="h4cnull&#39;s blog">
+<meta property="og:description" content="有时候web应用的漏洞会出现在需登陆认证后的页面中，通常情况下，我们会尝试多种方式通过认证，口令爆破、xss等，从而进一步对web应用进行测试。一次看到国外一大佬对vulnhub虚拟机hell的walkthrough，其思路独特，故作复现。当无法通过认证时，仍值得尝试按照其类似的思路对web应用进行分析。 ​    访问hell虚拟机的web，看起来是个个人应用，通过robots.txt，发现两个">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/1.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/2.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/3.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/4.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/5.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/7.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/8.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/9.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/16.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/10.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/11.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/12.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/13.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/14.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/15.PNG">
+<meta property="article:published_time" content="2020-03-09T06:32:01.153Z">
+<meta property="article:modified_time" content="2020-03-09T06:45:49.700Z">
+<meta property="article:author" content="h4cnull">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/1.PNG">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>分析需认证的web页面</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/02/24/%E5%86%85%E7%BD%91-%E6%89%A9%E5%B1%95-%E5%B8%B8%E8%A7%81%E6%9C%8D%E5%8A%A1%E4%BB%A5%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&text=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&title=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&is_video=false&description=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=分析需认证的web页面&body=Check out this article: http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&title=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&title=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&title=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&title=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&name=分析需认证的web页面&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&t=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        分析需认证的web页面
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">h4cnull's blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-09T06:32:01.153Z" itemprop="datePublished">2020-03-09</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>有时候web应用的漏洞会出现在需登陆认证后的页面中，通常情况下，我们会尝试多种方式通过认证，口令爆破、xss等，从而进一步对web应用进行测试。一次看到国外一大佬对vulnhub虚拟机hell的walkthrough，其思路独特，故作复现。当无法通过认证时，仍值得尝试按照其类似的思路对web应用进行分析。</p>
+<p>​    访问hell虚拟机的web，看起来是个个人应用，通过robots.txt，发现两个敏感目录，一般来说可以尝试对登陆入口弱口令测试，进一步可以对页面信息收集，猜测用户名、定制化字典进行爆破。</p>
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/1.PNG" class="" title="[]">
+
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/2.PNG" class="" title="[]">
+
+<p>​    继续对其根目录进行爆破，没有发现特别有用的入口，通过对子目录爆破，发现了一些页面。</p>
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/3.PNG" class="" title="[]">
+
+<p>​    users.php回显Jack，1如下：</p>
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/4.PNG" class="" title="[]">
+
+<p>​    index.php是登陆页面，post账号密码到login.php，panel.php应该是登陆成功后的“用户面板”。先burp直接访问这些页面看看。</p>
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/5.PNG" class="" title="[]">
+
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/7.PNG" class="" title="[]">
+
+<p>​    panel.php泄露了一些文件，逐一访问server.php等页面。访问personal.php页面，又是一个访问个人文件夹时的登陆页面。</p>
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/8.PNG" class="" title="[]">
+
+<p>​    notes.php看起来是个记事功能，写入note.txt中，存放在缓存目录，推测应该是/tmp/note.txt。</p>
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/9.PNG" class="" title="[]">
+
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/16.PNG" class="" title="[]">
+
+<p>​    现在再来看personal.php页面中表单处理页面check.php。访问后增加一个cookie值，失败次数1，判断此处登陆设有错误次数限制，如果只是判断这个cookie值的话，限制显然没用。但是可以尝试按照它的逻辑走一遍。把failcount=1加入请求时的cookie中，发现failcount在增加，印证了分析。</p>
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/10.PNG" class="" title="[]">
+
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/11.PNG" class="" title="[]">
+
+<p>​    下面直接设置failcount=10，再访问personal.php看看。也就是按照正常的业务逻辑，不断尝试登陆，当登陆超过次数时，登陆页面有什么变化。</p>
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/12.PNG" class="" title="[]">
+
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/13.PNG" class="" title="[]">
+
+<p>​    分析发现，这时候cookie值有增加了一个，intruder=1，并且程序本意是登陆personal文件夹有3次错误限制。这时cookie值又发生变化了。此时增加cookie值intruder=1访问应用的各个页面，发现panel.php有不一样的地方。</p>
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/14.PNG" class="" title="[]">
+
+<p>​    结合前面发现的1页面，猜测该处应该是包含了1那个页面，当去掉cookie值intruder=1，就没有了该部分，当设置intruder=users.php，发现panel.php页面包含了users.php。可以确认，此处存在文件包含漏洞。</p>
+<img src="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/15.PNG" class="" title="[]">
+
+<p>​    再结合前面发现的notes.php，可以将一句话写入到note.txt中，再文件包含拿下shell，至此拿到hell虚拟机的突破点。</p>
+<p>​    总结一下，在通过常规爆破等手段仍无法拿到“用户后台类”入口的情况下，仍可尝试对后台进一步信息收集，目录探测、分析源码等，尽可能分析出应用的功能是否存在缺陷，常见会有页面未授权访问、信息泄露等。</p>
+<p>​    国外大佬分析方法的原链接<a href="https://leonjza.github.io/blog/2014/07/20/hell-would-just-not-freeze-over" target="_blank" rel="noopener">https://leonjza.github.io/blog/2014/07/20/hell-would-just-not-freeze-over</a> 。</p>
+<p>​    </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&text=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&title=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&is_video=false&description=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=分析需认证的web页面&body=Check out this article: http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&title=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&title=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&title=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&title=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&name=分析需认证的web页面&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/&t=分析需认证的web页面" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 h4cnull
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
