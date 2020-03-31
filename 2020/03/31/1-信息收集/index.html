@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="信息收集一.信息收集的目的​    信息收集能了解目标基本情况、扩大攻击面以及突破口。信息收集不只是渗透第一步，而是融入了整个渗透过程，特别是扩大攻击面以及突破口。 二.信息搜集的出发点​    一个目标的信息主要包括两类，目标基本特征信息、资产信息。渗透测试主要集中精力搜集目标的资产信息，依据实际操作中收集的出发点进行分类。 ​    1.域名 ​    2.IP ​    3.web接口 ​">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1-信息收集">
+<meta property="og:url" content="http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/index.html">
+<meta property="og:site_name" content="h4cnull&#39;s blog">
+<meta property="og:description" content="信息收集一.信息收集的目的​    信息收集能了解目标基本情况、扩大攻击面以及突破口。信息收集不只是渗透第一步，而是融入了整个渗透过程，特别是扩大攻击面以及突破口。 二.信息搜集的出发点​    一个目标的信息主要包括两类，目标基本特征信息、资产信息。渗透测试主要集中精力搜集目标的资产信息，依据实际操作中收集的出发点进行分类。 ​    1.域名 ​    2.IP ​    3.web接口 ​">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/cer1.PNG">
+<meta property="og:image" content="http://yoursite.com/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/cer2.PNG">
+<meta property="article:published_time" content="2020-03-31T04:10:46.632Z">
+<meta property="article:modified_time" content="2020-03-31T04:15:28.663Z">
+<meta property="article:author" content="h4cnull">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/cer1.PNG">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>1-信息收集</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/03/09/%E5%88%86%E6%9E%90%E9%9C%80%E8%AE%A4%E8%AF%81%E7%9A%84web%E9%A1%B5%E9%9D%A2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&text=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&title=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&is_video=false&description=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=1-信息收集&body=Check out this article: http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&title=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&title=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&title=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&title=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&name=1-信息收集&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&t=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#信息收集"><span class="toc-number">1.</span> <span class="toc-text">信息收集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一-信息收集的目的"><span class="toc-number">2.</span> <span class="toc-text">一.信息收集的目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-信息搜集的出发点"><span class="toc-number">3.</span> <span class="toc-text">二.信息搜集的出发点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-信息收集技术详解"><span class="toc-number">4.</span> <span class="toc-text">三.信息收集技术详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-域名"><span class="toc-number">4.1.</span> <span class="toc-text">1.  域名</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#①whois、备案查询"><span class="toc-number">4.1.1.</span> <span class="toc-text">①whois、备案查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#②子域名"><span class="toc-number">4.1.2.</span> <span class="toc-text">②子域名</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-IP"><span class="toc-number">4.2.</span> <span class="toc-text">2.IP</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#①获取真实IP"><span class="toc-number">4.2.1.</span> <span class="toc-text">①获取真实IP</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#②端口、服务指纹探测、C段"><span class="toc-number">4.2.2.</span> <span class="toc-text">②端口、服务指纹探测、C段</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#③IP反解析"><span class="toc-number">4.2.3.</span> <span class="toc-text">③IP反解析</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-web接口"><span class="toc-number">4.3.</span> <span class="toc-text">3.web接口</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#①https证书查询"><span class="toc-number">4.3.1.</span> <span class="toc-text">①https证书查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#②web指纹识别"><span class="toc-number">4.3.2.</span> <span class="toc-text">②web指纹识别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#③robots-txt、源文件-lt-META-NAME-”ROBOTS”…-gt"><span class="toc-number">4.3.3.</span> <span class="toc-text">③robots.txt、源文件&lt;META NAME&#x3D;”ROBOTS”…&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑤目录浏览、目录爆破、后台目录爆破、物理路径报错"><span class="toc-number">4.3.4.</span> <span class="toc-text">⑤目录浏览、目录爆破、后台目录爆破、物理路径报错</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑥默认页面、管理控制台"><span class="toc-number">4.3.5.</span> <span class="toc-text">⑥默认页面、管理控制台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑦参数溢出"><span class="toc-number">4.3.6.</span> <span class="toc-text">⑦参数溢出</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑧入侵痕迹"><span class="toc-number">4.3.7.</span> <span class="toc-text">⑧入侵痕迹</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-搜索引擎、离线数据库"><span class="toc-number">4.4.</span> <span class="toc-text">4.搜索引擎、离线数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#①google-hack"><span class="toc-number">4.4.1.</span> <span class="toc-text">①google hack</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#②fofa、zoomeye、shodan、censys"><span class="toc-number">4.4.2.</span> <span class="toc-text">②fofa、zoomeye、shodan、censys</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#③离线数据库"><span class="toc-number">4.4.3.</span> <span class="toc-text">③离线数据库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#④快照"><span class="toc-number">4.4.4.</span> <span class="toc-text">④快照</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑤被黑查询"><span class="toc-number">4.4.5.</span> <span class="toc-text">⑤被黑查询</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-其它"><span class="toc-number">4.5.</span> <span class="toc-text">5.其它</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#①敏感文件泄露"><span class="toc-number">4.5.1.</span> <span class="toc-text">①敏感文件泄露</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#②github信息泄露"><span class="toc-number">4.5.2.</span> <span class="toc-text">②github信息泄露</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#③源码泄露"><span class="toc-number">4.5.3.</span> <span class="toc-text">③源码泄露</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#④公众号、群、微博泄露"><span class="toc-number">4.5.4.</span> <span class="toc-text">④公众号、群、微博泄露</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑤大型收集工具"><span class="toc-number">4.5.5.</span> <span class="toc-text">⑤大型收集工具</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        1-信息收集
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">h4cnull's blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-31T04:10:46.632Z" itemprop="datePublished">2020-03-31</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h3><h3 id="一-信息收集的目的"><a href="#一-信息收集的目的" class="headerlink" title="一.信息收集的目的"></a>一.信息收集的目的</h3><p>​    信息收集能了解目标基本情况、扩大攻击面以及突破口。信息收集不只是渗透第一步，而是融入了整个渗透过程，特别是扩大攻击面以及突破口。</p>
+<h3 id="二-信息搜集的出发点"><a href="#二-信息搜集的出发点" class="headerlink" title="二.信息搜集的出发点"></a>二.信息搜集的出发点</h3><p>​    一个目标的信息主要包括两类，目标基本特征信息、资产信息。渗透测试主要集中精力搜集目标的资产信息，依据实际操作中收集的出发点进行分类。</p>
+<p>​    1.域名</p>
+<p>​    2.IP</p>
+<p>​    3.web接口</p>
+<p>​    4.搜索引擎、离线数据库</p>
+<p>​    5.其它</p>
+<h3 id="三-信息收集技术详解"><a href="#三-信息收集技术详解" class="headerlink" title="三.信息收集技术详解"></a>三.信息收集技术详解</h3><h4 id="1-域名"><a href="#1-域名" class="headerlink" title="1.  域名"></a>1.  域名</h4><pre><code>以域名为出发点，通过备案、whois等查询获取到目标的基本信息，通过搜索引擎、工具挖掘子域名、真实IP等。</code></pre><h5 id="①whois、备案查询"><a href="#①whois、备案查询" class="headerlink" title="①whois、备案查询"></a>①whois、备案查询</h5><p>​    可收集注册者、邮箱、手机、地址、DNS（服务商）、CDN等信息。工具：站长工具。此类信息可用来制作字典、攻击dns、CDN等。</p>
+<h5 id="②子域名"><a href="#②子域名" class="headerlink" title="②子域名"></a>②子域名</h5><p>​    对子域名收集可暴露敏感接口、扩大攻击面等。</p>
+<p>​    a.搜索引擎：fofa、zoomeye、google等。</p>
+<p>​    b.域传输漏洞。如：</p>
+<p>​        dig ns zonetransfer.me</p>
+<p>​        dig axfr @nsztm1.digi.ninja zonetransfer.me</p>
+<p>​    c.暴力破解</p>
+<p>​        layer、subDomainsBrute、Sublist3r。</p>
+<p>​    d.综合收集</p>
+<p>​        <a href="https://github.com/laramies/theHarvester" target="_blank" rel="noopener">https://github.com/laramies/theHarvester</a>  支持从各大搜索引擎收集子域名，还收集email账号收集，虚拟主机，开放端口/服务器指纹等。</p>
+<h4 id="2-IP"><a href="#2-IP" class="headerlink" title="2.IP"></a>2.IP</h4><h5 id="①获取真实IP"><a href="#①获取真实IP" class="headerlink" title="①获取真实IP"></a>①获取真实IP</h5><p>​    a.邮箱源IP：用记事本打开邮件，一般X-Originating-IP就是源地址，将邮件头复制到<a href="https://toolbox.googleapps.com/apps/messageheader/" target="_blank" rel="noopener">https://toolbox.googleapps.com/apps/messageheader/</a>  分析。RSS订阅邮件、忘记密码等邮件。</p>
+<p>​    b.查历史域名解析记录：</p>
+<p>​    <a href="https://toolbar.netcraft.com/site_report" target="_blank" rel="noopener">https://toolbar.netcraft.com/site_report</a> </p>
+<p>​    <a href="https://viewdns.info/iphistory/?domain" target="_blank" rel="noopener">https://viewdns.info/iphistory/?domain</a> </p>
+<p>​    <a href="https://completedns.com" target="_blank" rel="noopener">https://completedns.com</a> </p>
+<p>​    <a href="https://x.threatbook.cn/" target="_blank" rel="noopener">https://x.threatbook.cn/</a> </p>
+<p>​    c.通过Zgrab绕CDN找真实IP。</p>
+<p>​    d.子域名可能使用了真实IP。</p>
+<p>​    e.信息泄露：使用工具扫描或者测试过程中报错等暴露地址。</p>
+<p>​    f. nslookup 国外冷门dns服务器。</p>
+<p>​    g. CDN配置解析不全：比如ping test.com 和ping <a href="http://www.test.com" target="_blank" rel="noopener">www.test.com</a>  的IP不同。</p>
+<h5 id="②端口、服务指纹探测、C段"><a href="#②端口、服务指纹探测、C段" class="headerlink" title="②端口、服务指纹探测、C段"></a>②端口、服务指纹探测、C段</h5><p>​    Nmap、Dnmap、masscan等，使用代理避免封锁<a href="https://mp.weixin.qq.com/s/01uPc5IbFLs5DUNuGVFt5w" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/01uPc5IbFLs5DUNuGVFt5w</a> 。</p>
+<p>常见端口：</p>
+<table>
+<thead>
+<tr>
+<th>21</th>
+<th>ftp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>22</td>
+<td>SSH</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Telnet</td>
+</tr>
+<tr>
+<td>161</td>
+<td>SNMP</td>
+</tr>
+<tr>
+<td>389</td>
+<td>LDAP</td>
+</tr>
+<tr>
+<td>445</td>
+<td>SMB</td>
+</tr>
+<tr>
+<td>1433</td>
+<td>MSSQL</td>
+</tr>
+<tr>
+<td>1521</td>
+<td>Oracle</td>
+</tr>
+<tr>
+<td>3306</td>
+<td>MySQL</td>
+</tr>
+<tr>
+<td>3389</td>
+<td>RDP</td>
+</tr>
+<tr>
+<td>5432</td>
+<td>PostgreSQL</td>
+</tr>
+<tr>
+<td>5900</td>
+<td>vnc</td>
+</tr>
+<tr>
+<td>1099</td>
+<td>rmi命令执行</td>
+</tr>
+<tr>
+<td>8000</td>
+<td>jdwp java 调试接口命令执行</td>
+</tr>
+<tr>
+<td>443</td>
+<td>SSL心脏滴血</td>
+</tr>
+<tr>
+<td>873</td>
+<td>Rsync未授权</td>
+</tr>
+<tr>
+<td>5984</td>
+<td>CouchDB <a href="http://xxx:5984/_utils/" target="_blank" rel="noopener">http://xxx:5984/_utils/</a></td>
+</tr>
+<tr>
+<td>6379</td>
+<td>redis未授权</td>
+</tr>
+<tr>
+<td>7001、7002</td>
+<td>WebLogic默认弱口令、反序列</td>
+</tr>
+<tr>
+<td>9200、9300</td>
+<td>elasticsearch</td>
+</tr>
+<tr>
+<td>11211</td>
+<td>memcache未授权访问</td>
+</tr>
+<tr>
+<td>27017、27018</td>
+<td>Mongodb未授权访问</td>
+</tr>
+<tr>
+<td>50000</td>
+<td>SAP命令执行</td>
+</tr>
+<tr>
+<td>50060、50070、50030</td>
+<td>hadoop默认端口未授权访问</td>
+</tr>
+<tr>
+<td>2375</td>
+<td>docker未授权访问</td>
+</tr>
+<tr>
+<td>3128</td>
+<td>squid代理默认端口</td>
+</tr>
+<tr>
+<td>2601、2604</td>
+<td>zebra路由默认密码 zebra</td>
+</tr>
+<tr>
+<td>4440</td>
+<td>rundeck</td>
+</tr>
+<tr>
+<td>4848</td>
+<td>glassfis中间件弱口令   admin/adminadmin</td>
+</tr>
+<tr>
+<td>9000</td>
+<td>fcigphp代码执行</td>
+</tr>
+<tr>
+<td>9043</td>
+<td>websphere弱口令admin/admin</td>
+</tr>
+</tbody></table>
+<h5 id="③IP反解析"><a href="#③IP反解析" class="headerlink" title="③IP反解析"></a>③IP反解析</h5><p>​    利用IP地址反解析域名记录。站长工具同IP网站查询、<a href="https://tools.ipip.net/ipdomain.php" target="_blank" rel="noopener">https://tools.ipip.net/ipdomain.php</a>  、<a href="https://hackertarget.com/reverse-ip-lookup/" target="_blank" rel="noopener">https://hackertarget.com/reverse-ip-lookup/</a>  。</p>
+<h4 id="3-web接口"><a href="#3-web接口" class="headerlink" title="3.web接口"></a>3.web接口</h4><h5 id="①https证书查询"><a href="#①https证书查询" class="headerlink" title="①https证书查询"></a>①https证书查询</h5><p>​    查看网站的https证书发现子域名，也可以通过证书指纹在censys上查询到IP地址。</p>
+<img src="/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/cer1.PNG" class="" title="[]">
+
+<img src="/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/cer2.PNG" class="" title="[]">
+
+<p>​    或者fofa上搜索含有xxx关键字的证书：cert=”xxx”。</p>
+<p>​    zoomeye搜索：ssl:”corp.google.com”</p>
+<h5 id="②web指纹识别"><a href="#②web指纹识别" class="headerlink" title="②web指纹识别"></a>②web指纹识别</h5><p>​    a. http OPTIONS、响应</p>
+<p>​    b. 在线扫描器</p>
+<p>​    <a href="http://whatweb.bugscaner.com/" target="_blank" rel="noopener">http://whatweb.bugscaner.com/</a> </p>
+<p>​    <a href="http://www.yunsee.cn/" target="_blank" rel="noopener">http://www.yunsee.cn/</a> </p>
+<h5 id="③robots-txt、源文件-lt-META-NAME-”ROBOTS”…-gt"><a href="#③robots-txt、源文件-lt-META-NAME-”ROBOTS”…-gt" class="headerlink" title="③robots.txt、源文件&lt;META NAME=”ROBOTS”…&gt;"></a>③robots.txt、源文件&lt;META NAME=”ROBOTS”…&gt;</h5><p>④页面源码</p>
+<p>​    burp_history_item_grep.py 辅助从页面提取目录、IP、域名、电话号码、email信息。JSFinder从js中提取URL、子域名。</p>
+<h5 id="⑤目录浏览、目录爆破、后台目录爆破、物理路径报错"><a href="#⑤目录浏览、目录爆破、后台目录爆破、物理路径报错" class="headerlink" title="⑤目录浏览、目录爆破、后台目录爆破、物理路径报错"></a>⑤目录浏览、目录爆破、后台目录爆破、物理路径报错</h5><p>​    a.目录浏览漏洞</p>
+<p>​    b.目录暴破、后台目录爆破</p>
+<p>​    dirsearch、dirbuster，对后台目录爆破，可能存在未经认证即可访问的页面。</p>
+<p>​    c.各种报错泄露物理路径。</p>
+<h5 id="⑥默认页面、管理控制台"><a href="#⑥默认页面、管理控制台" class="headerlink" title="⑥默认页面、管理控制台"></a>⑥默认页面、管理控制台</h5><p>​    一些web中间件、数据库等的web管理控制台。tomcat、aria2、weblogic、websphere、oracle、jboss、oracle、mongodb等。</p>
+<h5 id="⑦参数溢出"><a href="#⑦参数溢出" class="headerlink" title="⑦参数溢出"></a>⑦参数溢出</h5><p>​    输入超长字符串，导致数据溢出，产生报错泄露信息或者拒绝服务等。</p>
+<h5 id="⑧入侵痕迹"><a href="#⑧入侵痕迹" class="headerlink" title="⑧入侵痕迹"></a>⑧入侵痕迹</h5><p>​    存在被入侵痕迹，如webshell。通常使用安全漏洞扫描或者目录扫描工具发现。</p>
+<h4 id="4-搜索引擎、离线数据库"><a href="#4-搜索引擎、离线数据库" class="headerlink" title="4.搜索引擎、离线数据库"></a>4.搜索引擎、离线数据库</h4><h5 id="①google-hack"><a href="#①google-hack" class="headerlink" title="①google hack"></a>①google hack</h5><h5 id="②fofa、zoomeye、shodan、censys"><a href="#②fofa、zoomeye、shodan、censys" class="headerlink" title="②fofa、zoomeye、shodan、censys"></a>②fofa、zoomeye、shodan、censys</h5><p>​    a. fofa </p>
+<p>​    b. zoomeye 侧重于web层面的资产发现</p>
+<p>​    c. shodan 侧重于主机</p>
+<h5 id="③离线数据库"><a href="#③离线数据库" class="headerlink" title="③离线数据库"></a>③离线数据库</h5><p>​    scans.io、<a href="https://opendata.rapid7.com/" target="_blank" rel="noopener">https://opendata.rapid7.com/</a> 下载文件，本地对特征搜索。</p>
+<h5 id="④快照"><a href="#④快照" class="headerlink" title="④快照"></a>④快照</h5><p>​    <a href="https://archive.org/web/web.php" target="_blank" rel="noopener">https://archive.org/web/web.php</a> </p>
+<p>​    百度site:qxnzrmyy.com site+:+qxnzrmyy.com</p>
+<p>​    Google cache:xxx.com</p>
+<h5 id="⑤被黑查询"><a href="#⑤被黑查询" class="headerlink" title="⑤被黑查询"></a>⑤被黑查询</h5><p>​    从某某站点搜索targetdomain（IP…etc）</p>
+<p>​    如：site: openbugbounty.org zonetransfer.me。在openbugbounty.org中查找zonetransfer.me相关的。</p>
+<p>pastebin.com ：黑客匿名地去过滤和发布攻击期间所获得的信息。黑客团队把自己的攻击成果(比如数据库、代码)贴在网站上来炫耀、一些开发人员/网络工程师意外的将内部配置和凭据泄露、作为C2服务器。</p>
+<p>​    zone-h.org: Zone-H是一个恶意黑客经常去炫耀他们的成就的网站。类似的还有<a href="https://www.hacked.com.cn" target="_blank" rel="noopener">https://www.hacked.com.cn</a>  。</p>
+<h4 id="5-其它"><a href="#5-其它" class="headerlink" title="5.其它"></a>5.其它</h4><h5 id="①敏感文件泄露"><a href="#①敏感文件泄露" class="headerlink" title="①敏感文件泄露"></a>①敏感文件泄露</h5><p>​    如：口令、密钥、个人数据、会话标识、授权凭据、配置文件、日志、备份、残留开发文件等。通过爬虫、扫描工具如BBscan、查看页面源码等方式发现。</p>
+<h5 id="②github信息泄露"><a href="#②github信息泄露" class="headerlink" title="②github信息泄露"></a>②github信息泄露</h5><p>​    <a href="https://www.freebuf.com/column/178342.html" target="_blank" rel="noopener">https://www.freebuf.com/column/178342.html</a> </p>
+<p>​    <a href="https://github.com/0xbug/Hawkeye" target="_blank" rel="noopener">https://github.com/0xbug/Hawkeye</a></p>
+<p>​    <a href="https://github.com/UnkL4b/GitMiner" target="_blank" rel="noopener">https://github.com/UnkL4b/GitMiner</a></p>
+<p>​    <a href="https://github.com/FeeiCN/GSIL" target="_blank" rel="noopener">https://github.com/FeeiCN/GSIL</a></p>
+<h5 id="③源码泄露"><a href="#③源码泄露" class="headerlink" title="③源码泄露"></a>③源码泄露</h5><p>​    <a href="https://blog.csdn.net/Fly_hps/article/details/82821857" target="_blank" rel="noopener">https://blog.csdn.net/Fly_hps/article/details/82821857</a> </p>
+<h5 id="④公众号、群、微博泄露"><a href="#④公众号、群、微博泄露" class="headerlink" title="④公众号、群、微博泄露"></a>④公众号、群、微博泄露</h5><h5 id="⑤大型收集工具"><a href="#⑤大型收集工具" class="headerlink" title="⑤大型收集工具"></a>⑤大型收集工具</h5><p>​    保持更新的大型信息收集工具如spiderfoot、theharvester。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#信息收集"><span class="toc-number">1.</span> <span class="toc-text">信息收集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一-信息收集的目的"><span class="toc-number">2.</span> <span class="toc-text">一.信息收集的目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-信息搜集的出发点"><span class="toc-number">3.</span> <span class="toc-text">二.信息搜集的出发点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-信息收集技术详解"><span class="toc-number">4.</span> <span class="toc-text">三.信息收集技术详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-域名"><span class="toc-number">4.1.</span> <span class="toc-text">1.  域名</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#①whois、备案查询"><span class="toc-number">4.1.1.</span> <span class="toc-text">①whois、备案查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#②子域名"><span class="toc-number">4.1.2.</span> <span class="toc-text">②子域名</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-IP"><span class="toc-number">4.2.</span> <span class="toc-text">2.IP</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#①获取真实IP"><span class="toc-number">4.2.1.</span> <span class="toc-text">①获取真实IP</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#②端口、服务指纹探测、C段"><span class="toc-number">4.2.2.</span> <span class="toc-text">②端口、服务指纹探测、C段</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#③IP反解析"><span class="toc-number">4.2.3.</span> <span class="toc-text">③IP反解析</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-web接口"><span class="toc-number">4.3.</span> <span class="toc-text">3.web接口</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#①https证书查询"><span class="toc-number">4.3.1.</span> <span class="toc-text">①https证书查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#②web指纹识别"><span class="toc-number">4.3.2.</span> <span class="toc-text">②web指纹识别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#③robots-txt、源文件-lt-META-NAME-”ROBOTS”…-gt"><span class="toc-number">4.3.3.</span> <span class="toc-text">③robots.txt、源文件&lt;META NAME&#x3D;”ROBOTS”…&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑤目录浏览、目录爆破、后台目录爆破、物理路径报错"><span class="toc-number">4.3.4.</span> <span class="toc-text">⑤目录浏览、目录爆破、后台目录爆破、物理路径报错</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑥默认页面、管理控制台"><span class="toc-number">4.3.5.</span> <span class="toc-text">⑥默认页面、管理控制台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑦参数溢出"><span class="toc-number">4.3.6.</span> <span class="toc-text">⑦参数溢出</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑧入侵痕迹"><span class="toc-number">4.3.7.</span> <span class="toc-text">⑧入侵痕迹</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-搜索引擎、离线数据库"><span class="toc-number">4.4.</span> <span class="toc-text">4.搜索引擎、离线数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#①google-hack"><span class="toc-number">4.4.1.</span> <span class="toc-text">①google hack</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#②fofa、zoomeye、shodan、censys"><span class="toc-number">4.4.2.</span> <span class="toc-text">②fofa、zoomeye、shodan、censys</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#③离线数据库"><span class="toc-number">4.4.3.</span> <span class="toc-text">③离线数据库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#④快照"><span class="toc-number">4.4.4.</span> <span class="toc-text">④快照</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑤被黑查询"><span class="toc-number">4.4.5.</span> <span class="toc-text">⑤被黑查询</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-其它"><span class="toc-number">4.5.</span> <span class="toc-text">5.其它</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#①敏感文件泄露"><span class="toc-number">4.5.1.</span> <span class="toc-text">①敏感文件泄露</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#②github信息泄露"><span class="toc-number">4.5.2.</span> <span class="toc-text">②github信息泄露</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#③源码泄露"><span class="toc-number">4.5.3.</span> <span class="toc-text">③源码泄露</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#④公众号、群、微博泄露"><span class="toc-number">4.5.4.</span> <span class="toc-text">④公众号、群、微博泄露</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#⑤大型收集工具"><span class="toc-number">4.5.5.</span> <span class="toc-text">⑤大型收集工具</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&text=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&title=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&is_video=false&description=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=1-信息收集&body=Check out this article: http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&title=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&title=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&title=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&title=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&name=1-信息收集&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/child/2020/03/31/1-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/&t=1-信息收集" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 h4cnull
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
